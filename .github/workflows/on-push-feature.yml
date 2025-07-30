@@ -1,0 +1,19 @@
+name: Reusable on push feature
+
+on:
+    workflow_call:
+
+jobs:
+    feature-branch-push:
+        name: Feature Push
+        runs-on: ubuntu-24.04
+        steps:
+            - name: Get artifact version
+              id: version
+              uses: keeonline/gh-actions/actions/artifact-version@v0.0.2
+
+            - name: Output values
+              run: |
+                echo "branch=${{steps.version.outputs.branch}}"
+                echo "release=${{steps.version.outputs.release}}"
+                echo "projected_release=${{steps.version.outputs.projected_release}}"

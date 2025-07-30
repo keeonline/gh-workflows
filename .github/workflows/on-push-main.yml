@@ -1,0 +1,27 @@
+name: Reusable on push main
+
+on:
+    workflow_call:
+
+jobs:
+    main-branch-push:
+        name: Main Push
+        runs-on: ubuntu-24.04
+        steps:
+            - name: Get artifact version
+              id: version
+              uses: keeonline/gh-actions/actions/artifact-version@v0.0.2
+
+            - name: Output values
+              run: |
+                echo "branch=${{steps.version.outputs.branch}}"
+                echo "release=${{steps.version.outputs.release}}"
+                echo "projected_release=${{steps.version.outputs.projected_release}}"
+
+            - name: Tag repo
+              uses: richardsimko/update-tag@v1.1.6
+              with:
+                tag_name: ${{steps.version.outputs.release}}
+              env:
+                GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+
