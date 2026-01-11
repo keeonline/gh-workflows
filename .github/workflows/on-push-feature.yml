@@ -10,10 +10,9 @@ jobs:
         steps:
             - name: Get artifact version
               id: version
-              uses: keeonline/gh-actions/actions/artifact-version@v0.0.2
+              uses: keeonline/gh-actions/actions/artifact-version@v0.0.8
 
             - name: Output values
               run: |
-                echo "branch=${{steps.version.outputs.branch}}"
-                echo "release=${{steps.version.outputs.release}}"
+                echo "value=${{steps.version.outputs.value}}"
                 echo "projected_release=${{steps.version.outputs.projected_release}}"
